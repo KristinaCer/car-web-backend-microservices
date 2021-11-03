@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "pricing.endpoint",
+      "type": "java.lang.String",
+      "description": "Description for pricing.endpoint."
+  }
+] }
