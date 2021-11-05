@@ -15,7 +15,7 @@ view of vehicle details including price and address.
 
 ## Operations
 
-Swagger UI: http://localhost:8080/swagger-ui.html
+Swagger UI: http://localhost:8081/swagger-ui.html
 
 ### Create a Vehicle
 
