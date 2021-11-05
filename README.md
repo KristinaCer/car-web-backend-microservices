@@ -18,5 +18,5 @@ Back-end system for a car website is the project, based on microservices archite
 - Automatic model mapping
 - H2 in-memory datbase
 
-The project was implemented as an Udacity Java Web Developer nanodegree assignment.
+The project was implemented as an Udacity Java Web Developer program's assignment.
 
