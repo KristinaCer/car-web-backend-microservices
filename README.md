@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Back-end system for a car website is the project, based on microservices architecture.
+Back-end system for a car website is a project, based on microservices architecture.
 
 ## Architecture
 
