@@ -6,7 +6,7 @@ I completed a simple back-end system for a car website, based on microservices a
 
 ## Architecture
 
-Back-end system for a car website is the project, based on microservices architecture. Vehicles API was implemented using Java and Spring Boot, and it communicatse with separate location and pricing microservices, registered to Eurika discovery server.
+Back-end system for a car website is the project, based on microservices architecture. Vehicles API was implemented using Java and Spring Boot, and it communicatse with separate location and pricing microservices, registered to Eureka discovery server.
 
 ## Features
 
