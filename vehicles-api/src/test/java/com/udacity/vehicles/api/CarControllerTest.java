@@ -1,26 +1,22 @@
 package com.udacity.vehicles.api;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.BDDMockito.given;;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.udacity.vehicles.client.maps.MapsClient;
-import com.udacity.vehicles.client.prices.PriceClient;
-import com.udacity.vehicles.domain.Condition;
-import com.udacity.vehicles.domain.Location;
-import com.udacity.vehicles.domain.car.Car;
-import com.udacity.vehicles.domain.car.Details;
-import com.udacity.vehicles.domain.manufacturer.Manufacturer;
-import com.udacity.vehicles.service.CarService;
+import com.kristina.vehicles.client.maps.MapsClient;
+import com.kristina.vehicles.client.prices.PriceClient;
+import com.kristina.vehicles.domain.Condition;
+import com.kristina.vehicles.domain.Location;
+
 import java.net.URI;
 import java.util.Collections;
+
+import com.kristina.vehicles.domain.car.Car;
+import com.kristina.vehicles.domain.car.Details;
+import com.kristina.vehicles.domain.manufacturer.Manufacturer;
+import com.kristina.vehicles.service.CarService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
