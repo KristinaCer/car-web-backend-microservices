@@ -23,7 +23,7 @@ public class PriceRepository {
         .setScale(2, RoundingMode.HALF_UP);
   }
 
-  public Map<Long, Price> findAll() {
+  public Map<Long, Price> findAllPrices() {
     return PRICES;
   }
 }
