@@ -28,7 +28,7 @@ class PricingServiceTest {
     private PricingService pricingService;
 
     @Test
-    void getPrice_withInvalidVehicleId_ThrowsPriceException() throws PriceException {
+    void getPrice_withInvalidVehicleId_throwsPriceException() throws PriceException {
         //given
         given(this.priceRepository.findAllPrices()).willReturn(new HashMap<>());
         //when
@@ -41,7 +41,7 @@ class PricingServiceTest {
     }
 
     @Test
-    void getPrice_withValidVehicleId_Success() throws PriceException {
+    void getPrice_withValidVehicleId_success() throws PriceException {
         //given
         HashMap<Long, Price> resultLongPriceMap = new HashMap<>();
         Price price = new Price();

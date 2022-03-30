@@ -1,44 +1,30 @@
-package com.udacity.vehicles.api;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+package com.kristina.vehicles.service.api;
 
 import com.kristina.vehicles.client.maps.MapsClient;
 import com.kristina.vehicles.client.prices.PriceClient;
 import com.kristina.vehicles.domain.Condition;
 import com.kristina.vehicles.domain.Location;
-
-import java.net.URI;
-import java.util.Collections;
-
 import com.kristina.vehicles.domain.car.Car;
 import com.kristina.vehicles.domain.car.Details;
 import com.kristina.vehicles.domain.manufacturer.Manufacturer;
 import com.kristina.vehicles.service.CarService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-/**
- * Implements testing of the CarController class.
- */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-@AutoConfigureJsonTesters
-public class CarControllerTest {
+import java.net.URI;
+import java.util.Collections;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+public class CarControllerTest {
     @Autowired
     private MockMvc mvc;
 
@@ -57,7 +43,7 @@ public class CarControllerTest {
     /**
      * Creates pre-requisites for testing, such as an example car.
      */
-    @Before
+    @BeforeEach
     public void setup() {
         Car car = getCar();
         car.setId(1L);
@@ -74,10 +60,10 @@ public class CarControllerTest {
     public void createCar() throws Exception {
         Car car = getCar();
         mvc.perform(
-                post(new URI("/cars"))
-                        .content(json.write(car).getJson())
-                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .accept(MediaType.APPLICATION_JSON_UTF8))
+                        post(new URI("/cars"))
+                                .content(json.write(car).getJson())
+                                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                                .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isCreated());
     }
 
