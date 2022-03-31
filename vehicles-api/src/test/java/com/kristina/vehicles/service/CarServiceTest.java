@@ -19,6 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -60,6 +61,21 @@ class CarServiceTest {
     }
 
     @Test
+    void saveCar_ifACarAlreadyExists_successfullyUpdatesItsData(){
+        //given
+        Car carToBeUpdated = getCar();
+        carToBeUpdated.setId(125l);
+        given(this.carRepository.findById(carToBeUpdated.getId())).willReturn(Optional.ofNullable(carToBeUpdated));
+        Car car = getCar();
+        car.setId(125l);
+        car.setPrice("10000");
+        //when
+        this.carService.save(car);
+        //then
+        verify(carRepository).save(car);
+    }
+
+    @Test
     void saveCar_whenIdNonExisting_throwsCarNotFoundException() {
         //given
         Car car = getCar();
@@ -72,9 +88,52 @@ class CarServiceTest {
     }
 
     @Test
-    void deleteCar_success(){
-
+    void findById_success(){
+        //given
+        Car car = getCar();
+        car.setId(123l);
+        given(this.carRepository.findById(car.getId())).willReturn(Optional.of(car));
+        //when
+        Car foundCar = this.carService.findById(car.getId());
+        //then
+        assertEquals(car, foundCar);
+        verify(carRepository).findById(car.getId());
     }
+
+    @Test
+    void findById_whenCarDoesNotExist_willThrowCarNotFoundException(){
+        //given
+        Car car = getCar();
+        car.setId(123l);
+        given(this.carRepository.findById(car.getId())).willReturn(Optional.ofNullable(null));
+        //when
+        //then
+        assertThrows(CarNotFoundException.class, ()-> this.carService.findById(car.getId()));
+    }
+
+
+    @Test
+    void deleteCar_success(){
+        //given
+        Car car = getCar();
+        car.setId(1l);
+        given(this.carRepository.findById(car.getId())).willReturn(Optional.of(car));
+        //when
+        this.carService.delete(car.getId());
+        verify(carRepository).delete(car);
+    }
+
+    @Test
+    void deleteCar_whenCarNotExists_throwsCarNotFoundException(){
+        //given
+        Car car = getCar();
+        given(this.carRepository.findById(car.getId())).willReturn(Optional.ofNullable(null));
+        //when
+        //then
+        assertThrows(CarNotFoundException.class, () ->this.carService.delete(car.getId()));
+        verify(carRepository, never()).delete(car);
+    }
+
 
 
 
