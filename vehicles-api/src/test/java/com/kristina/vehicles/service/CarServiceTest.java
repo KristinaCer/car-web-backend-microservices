@@ -11,6 +11,7 @@ import com.kristina.vehicles.domain.manufacturer.Manufacturer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
@@ -63,16 +64,17 @@ class CarServiceTest {
     @Test
     void saveCar_ifACarAlreadyExists_successfullyUpdatesItsData(){
         //given
-        Car carToBeUpdated = getCar();
-        carToBeUpdated.setId(125l);
-        given(this.carRepository.findById(carToBeUpdated.getId())).willReturn(Optional.ofNullable(carToBeUpdated));
         Car car = getCar();
-        car.setId(125l);
-        car.setPrice("10000");
+        long id = 125L;
+        car.setId(id);
+        given(this.carRepository.findById(id)).willReturn(Optional.of(car));
+
         //when
-        this.carService.save(car);
+        Car carToBeUpdated = this.carRepository.findById(id).get();
+        carToBeUpdated.setPrice("10000");
+        this.carService.save(carToBeUpdated);
         //then
-        verify(carRepository).save(car);
+        verify(carRepository).save(carToBeUpdated);
     }
 
     @Test
