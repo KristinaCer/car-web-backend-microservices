@@ -62,7 +62,7 @@ public class CarControllerTest {
   public void listCars() throws Exception {
     given(carService.list()).willReturn(Arrays.asList(getCar()));
     mvc.perform(get("/cars").contentType(MediaType.APPLICATION_JSON))
-          .andExpect(jsonPath("$.size()", is(1)))
+          .andExpect(jsonPath("$._embedded.carList.size()", is(1)))
         .andExpect(status().isOk());
   }
 
