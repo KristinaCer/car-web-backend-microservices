@@ -22,7 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.net.URI;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -61,10 +60,9 @@ public class CarControllerTest {
 
   @Test
   public void listCars() throws Exception {
-    List<Car> cars = Arrays.asList(getCar());
-    given(carService.list()).willReturn(cars);
+    given(carService.list()).willReturn(Arrays.asList(getCar()));
     mvc.perform(get("/cars").contentType(MediaType.APPLICATION_JSON))
-      //  .andExpect(jsonPath("$.size()", is(cars.size()))) -- WHY ACTUAL VALUE IS 2???? what does $.size actually mean?
+          .andExpect(jsonPath("$.size()", is(1)))
         .andExpect(status().isOk());
   }
 
@@ -73,6 +71,7 @@ public class CarControllerTest {
    *
    * @throws Exception if the read operation for a single car fails
    */
+
   @Test
   public void findCar() throws Exception {
     Car car = getCar();
