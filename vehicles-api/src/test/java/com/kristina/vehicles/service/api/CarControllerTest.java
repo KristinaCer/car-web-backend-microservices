@@ -47,7 +47,7 @@ public class CarControllerTest {
   @MockBean private MapsClient mapsClient;
 
   @Test
-  public void createCar() throws Exception {
+  public void createCar_success() throws Exception {
     Car car = getCar();
     given(carService.save(any())).willReturn(car);
     mvc.perform(
@@ -59,7 +59,22 @@ public class CarControllerTest {
   }
 
   @Test
-  public void listCars() throws Exception {
+  public void updateCar_success() throws  Exception{
+    Car car = getCar();
+    car.setId(1L);
+    car.setPrice("50000");
+    given(carService.save(any())).willReturn(car);
+    mvc.perform(
+                    put(new URI("/cars/"+ car.getId()))
+                            .content(json.write(car).getJson())
+                            .contentType(MediaType.APPLICATION_JSON_UTF8)
+                            .accept(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$.price", is(car.getPrice())))
+            .andExpect(status().isOk());
+  }
+
+  @Test
+  public void listCars_success() throws Exception {
     given(carService.list()).willReturn(Arrays.asList(getCar()));
     mvc.perform(get("/cars").contentType(MediaType.APPLICATION_JSON))
           .andExpect(jsonPath("$._embedded.carList.size()", is(1)))
@@ -73,7 +88,7 @@ public class CarControllerTest {
    */
 
   @Test
-  public void findCar() throws Exception {
+  public void findCar_success() throws Exception {
     Car car = getCar();
     car.setId(1L);
     given(carService.findById(any())).willReturn(car);
@@ -81,6 +96,7 @@ public class CarControllerTest {
         .andExpect(jsonPath("$.details.model", is(car.getDetails().getModel())))
         .andExpect(status().isOk());
   }
+
 
   /**
    * Tests the deletion of a single car by ID.

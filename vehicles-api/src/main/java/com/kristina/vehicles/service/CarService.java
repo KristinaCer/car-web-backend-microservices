@@ -65,6 +65,7 @@ public class CarService {
       Car carToBeUpdated = repository.findById(car.getId()).orElseThrow(CarNotFoundException::new);
       carToBeUpdated.setDetails(car.getDetails());
       carToBeUpdated.setLocation(car.getLocation());
+      carToBeUpdated.setCondition(car.getCondition());
       return repository.save(carToBeUpdated);
     }
     return repository.save(car);
