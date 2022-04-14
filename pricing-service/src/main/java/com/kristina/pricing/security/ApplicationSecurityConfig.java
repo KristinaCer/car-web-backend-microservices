@@ -8,39 +8,60 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import static com.kristina.pricing.security.ApplicationUserRole.ADMIN;
+import static com.kristina.pricing.security.ApplicationUserRole.STUDENT;
 
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final PasswordConfig passwordConfig;
+  private final PasswordEncoder passwordEncoder;
 
-    public ApplicationSecurityConfig(PasswordConfig passwordConfig) {
-        this.passwordConfig = passwordConfig;
-    }
-    //Basic Auth
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                //whitelisting the requests for the following urls for all users even they are not logged in
-                .antMatchers("/", "index", "/css/*", "/js/*")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
-    }
-    //Role-based auth
-    //1. Declare user details in memory
-    @Override
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetails kristinaUser = User.builder()
-                .username("Kristina Cer")
-                //Spring enforces password encoding!
-                .password(passwordConfig.passwordEncoder().encode("password"))
-                .roles("STUDENT") //ROLE_STUDENT
-                .build();
-        return new InMemoryUserDetailsManager(kristinaUser);
-    }
+  public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
+    this.passwordEncoder = passwordEncoder;
+  }
+
+  // Basic Auth
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+        // whitelisting the requests for the following urls for all users even they are not logged
+        // in
+        .antMatchers("/", "index", "/css/*", "/js/*")
+        .permitAll()
+        // ROLE_BASED AUTH: only students will be able to access this api
+        .antMatchers("/api/**")
+        .hasRole(STUDENT.name())
+        .anyRequest()
+        .authenticated()
+        .and()
+        .httpBasic();
+  }
+  // Role-based auth
+  // 1. Declare user details in memory
+  @Override
+  @Bean
+  protected UserDetailsService userDetailsService() {
+
+    UserDetails kristinaUser =
+        User.builder()
+            .username("Kristina")
+            // Spring enforces password encoding!
+            .password(passwordEncoder.encode("pass"))
+            .roles(STUDENT.name()) // ROLE_STUDENT
+            .build();
+
+    UserDetails lindaUser =
+        User.builder()
+            .username("Linda")
+            // Spring enforces password encoding!
+            .password(passwordEncoder.encode("pass"))
+            // ApplicationUserRole.ADMIN
+            .roles(ADMIN.name()) // ROLE_ADMIN
+            .build();
+
+    return new InMemoryUserDetailsManager(kristinaUser, lindaUser);
+  }
 }
