@@ -11,8 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-import static com.kristina.pricing.security.ApplicationUserRole.ADMIN;
-import static com.kristina.pricing.security.ApplicationUserRole.STUDENT;
+import static com.kristina.pricing.security.ApplicationUserRole.*;
 
 @Configuration
 @EnableWebSecurity
@@ -33,7 +32,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         // ROLE_BASED AUTH: only students will be able to access this api
         .antMatchers("/api/**")
-        .hasRole(STUDENT.name())
+        .hasRole(ADMIN.name())
         .anyRequest()
         .authenticated()
         .and()
@@ -50,7 +49,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
             .username("Kristina")
             // Spring enforces password encoding!
             .password(passwordEncoder.encode("pass"))
-            .roles(STUDENT.name()) // ROLE_STUDENT
+            .roles(CLIENT.name()) // ROLE_STUDENT
             .build();
 
     UserDetails lindaUser =

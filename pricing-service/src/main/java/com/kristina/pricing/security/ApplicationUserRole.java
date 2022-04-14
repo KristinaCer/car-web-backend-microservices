@@ -7,7 +7,7 @@ import java.util.Set;
 import static com.kristina.pricing.security.ApplicationUserPermission.*;
 
 public enum ApplicationUserRole {
-  STUDENT(Sets.newHashSet()),
+  CLIENT(Sets.newHashSet()),
   ADMIN(Sets.newHashSet(COURSE_READ, COURSE_WRITE, STUDENT_READ, STUDENT_WRITE));
 
   private final Set<ApplicationUserPermission> permissions;
