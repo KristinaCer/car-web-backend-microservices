@@ -16,6 +16,14 @@ public class PricingService {
     this.repository = repository;
   }
 
+  public Price save(Long id, Price price) throws PriceException {
+    if(id == null && id>0 || id > 20){
+      throw new PriceException("Price not found!");
+    } else{
+      repository.updatePrice(id,price);
+    } return price;
+  }
+
   /**
    * If a valid vehicle ID, gets the price of the vehicle from the stored array.
    *

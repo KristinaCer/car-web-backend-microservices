@@ -9,12 +9,14 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
+import static java.time.LocalDateTime.now;
+
 @Repository
 public class PriceRepository {
 
-  private static final Map<Long, Price> PRICES =
+  private static Map<Long, Price> PRICES =
       LongStream.range(1, 20)
-          .mapToObj(i -> new Price("USD", randomPrice(), i))
+          .mapToObj(i -> new Price("USD", randomPrice(), i, now()))
           .collect(Collectors.toMap(Price::getVehicleId, p -> p));
 
   private static BigDecimal randomPrice() {
@@ -25,5 +27,10 @@ public class PriceRepository {
 
   public Map<Long, Price> findAllPrices() {
     return PRICES;
+  }
+
+  public Price updatePrice(Long nr, Price price) {
+    PRICES.replace(nr, price);
+    return price;
   }
 }
