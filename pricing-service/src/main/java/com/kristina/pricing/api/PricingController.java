@@ -9,6 +9,7 @@ import com.kristina.pricing.service.PriceException;
 import com.kristina.pricing.service.PricingService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -37,23 +38,24 @@ public class PricingController {
    * @return price of the vehicle, or error that it was not found.
    */
   @GetMapping
-  public Price get(@RequestParam Long vehicleId) {
+  public ResponseEntity<Price> get(@RequestParam Long vehicleId) {
     try {
-      return service.getPrice(vehicleId);
+      return new ResponseEntity<>(service.getPrice(vehicleId), HttpStatus.OK);
     } catch (PriceException ex) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Price Not Found", ex);
     }
   }
 
   @PutMapping("/{vehicleId}")
-  public Price update(@PathVariable Long vehicleId, @Valid @RequestBody Price price) {
+  public ResponseEntity<Price> update(
+      @PathVariable Long vehicleId, @Valid @RequestBody Price price) {
     Price newPrice = null;
     try {
       newPrice = service.save(vehicleId, price);
     } catch (PriceException e) {
       e.printStackTrace();
     }
-    return newPrice;
+    return new ResponseEntity<>(newPrice, HttpStatus.OK);
   }
 
   @PutMapping("/fake/{vehicleId}")
@@ -86,7 +88,7 @@ public class PricingController {
     return price;
   }
 
-  @PostMapping("/turbo-price/by-param")
+  @PostMapping("/fake/turbo-price/by-param")
   public void createNewQueryParams(
       @RequestParam Long id,
       @RequestParam String currency,
@@ -97,7 +99,7 @@ public class PricingController {
     System.out.println(turboPrice);
   }
 
-  @PostMapping("/turbo-price/by-model")
+  @PostMapping("/fake/turbo-price/by-model")
   public void createNewQueryByModel(@ModelAttribute TurboPrice turboPrice) {
     System.out.println(turboPrice);
   }
