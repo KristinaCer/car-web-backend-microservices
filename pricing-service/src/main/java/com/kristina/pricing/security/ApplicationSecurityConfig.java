@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import static com.kristina.pricing.security.ApplicationUserPermission.PRICE_READ;
+import static com.kristina.pricing.security.ApplicationUserPermission.PRICE_WRITE;
 import static com.kristina.pricing.security.ApplicationUserRole.*;
 
 @Configuration
@@ -36,7 +37,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         // ROLE_BASED AUTH: only students will be able to access this api
         .antMatchers(HttpMethod.PUT, "/api/**")
-        .hasAuthority(PRICE_READ.name())
+        .hasAuthority(PRICE_WRITE.name())
         .antMatchers(HttpMethod.GET, "/api/**")
         .hasAnyRole(ADMIN.name(), ADMINTRAINEE.name())
         .anyRequest()
@@ -53,7 +54,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         User.builder()
             .username("Kristina")
             // Spring enforces password encoding!
-            .password(passwordEncoder.encode("pass"))
+            .password(passwordEncoder.encode("pass1"))
             // .roles(ADMIN.name())
             .authorities(ADMIN.getGrantedAuthorities())
             .build();
@@ -62,7 +63,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         User.builder()
             .username("Linda")
             // Spring enforces password encoding!
-            .password(passwordEncoder.encode("pass"))
+            .password(passwordEncoder.encode("pass2"))
             // .roles(ADMINTRAINEE.name())
             .authorities(ADMINTRAINEE.getGrantedAuthorities())
             .build();
@@ -70,7 +71,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         User.builder()
             .username("Thomas")
             // Spring enforces password encoding!
-            .password(passwordEncoder.encode("pass"))
+            .password(passwordEncoder.encode("pass3"))
             // .roles(CLIENT.name())
             .authorities(CLIENT.getGrantedAuthorities())
             .build();
