@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-import static com.kristina.pricing.security.ApplicationUserPermission.PRICE_READ;
 import static com.kristina.pricing.security.ApplicationUserPermission.PRICE_WRITE;
 import static com.kristina.pricing.security.ApplicationUserRole.*;
 
@@ -36,9 +35,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/", "index", "/css/*", "/js/*")
         .permitAll()
         // ROLE_BASED AUTH: only students will be able to access this api
-        .antMatchers(HttpMethod.PUT, "/api/**")
+        .antMatchers(HttpMethod.PUT, "/services/price/**")
         .hasAuthority(PRICE_WRITE.name())
-        .antMatchers(HttpMethod.GET, "/api/**")
+        .antMatchers(HttpMethod.GET, "/services/price/**")
         .hasAnyRole(ADMIN.name(), ADMINTRAINEE.name())
         .anyRequest()
         .authenticated()
