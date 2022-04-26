@@ -34,7 +34,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         // in
         .antMatchers("/", "index", "/css/*", "/js/*")
         .permitAll()
-        // ROLE_BASED AUTH: only students will be able to access this api
+        // ROLE_BASED AUTH: only admin and admin trainee will be able to access this api
         .antMatchers(HttpMethod.PUT, "/services/price/**")
         .hasAuthority(PRICE_WRITE.name())
         .antMatchers(HttpMethod.GET, "/services/price/**")
