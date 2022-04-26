@@ -42,7 +42,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         .anyRequest()
         .authenticated()
         .and()
-        .httpBasic();
+        .formLogin().defaultSuccessUrl("/services/price/?vehicleId=1", true);
   }
   // Role-based auth
   // 1. Declare user details in memory
