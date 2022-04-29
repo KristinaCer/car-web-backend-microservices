@@ -1,0 +1,4 @@
+com\kristina\boogle\maps\MapsController.class
+com\kristina\boogle\maps\BoogleMapsApplication.class
+com\kristina\boogle\maps\Address.class
+com\kristina\boogle\maps\MockAddressRepository.class
